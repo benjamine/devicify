@@ -70,23 +70,54 @@ function on(event, elem, selector, handler) {
     })
 }
 
-on('click', window, 'button.download', e => {
+on('click', window, 'button.download', async (e) => {
     e.preventDefault();
-    const mockup = e.target.closest('.mockup').querySelector('.mockup-image');
-    htmlToImage.toPng(mockup)
-        .then((dataUrl) => {
-            const link = document.createElement('a');
-            link.download = 'mockup.png';
-            link.href = dataUrl;
-            link.click();
-        })
-        .catch((error) => {
-            console.error('oops, something went wrong!', error);
-        });
+    const mockup = e.target.closest('.mockup');
+    const element = mockup.querySelector('.mockup-image');
+    const options = {
+        /*
+        width: 400,
+        height: 300,
+        canvasWidth: 400,
+        canvasHeight: 300,
+        */
+        cacheBust: true,
+    };
+
+    mockup.classList.add("loading");
+    try {
+
+        let dataUrl = await htmlToImage.toPng(element, options);
+        for (let i = 0; i < 30; i++) {
+            // on iOS, we might need some retries to get a good image
+            if (i > 2 && dataUrl.length > 400 * 1024) {
+                break;
+            } else {
+                await new Promise(resolve => setTimeout(resolve, 50));
+                dataUrl = await htmlToImage.toPng(element, options)
+            }
+        }
+        const link = document.createElement('a');
+        link.href = dataUrl;
+        link.download = 'mockup.png';
+        link.click();
+    } catch (error) {
+        pageLog( `error generating image: ${error.message}`, 'red');
+    } finally {
+        mockup.classList.remove("loading");
+    }
 });
 
 function demo() {    
     pond.addFiles(
         ...[1, 2, 3, 4].map(i => `https://benjamine.github.io/devicify/screenshots/sample/sample${i}.jpeg`)
     );
+}
+
+function pageLog(message, color) {
+    const elem = document.body.appendChild(document.createElement("div"));
+    elem.innerText = message;
+    if (color) {
+        elem.style.color = color;
+    }
 }

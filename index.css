@@ -36,6 +36,11 @@ body {
         max-width: 100%;
         z-index: -1;
     }
+
+    &.loading button {
+        pointer-events: none;
+        opacity: 0.5;
+    }
 }
 
 .toolbar {
