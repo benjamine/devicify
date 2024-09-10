@@ -1,0 +1,66 @@
+body {
+    background: #fff;
+}
+
+.filepond--drop-label {
+    height: 100vh;
+}
+
+.generated .filepond--drop-label {
+    height: auto;
+}
+
+.filepond--item {
+    width: calc(50% - 0.5em);
+}
+
+.mockup {
+    position: relative;
+
+    img {
+        max-width: 100%;
+    }
+
+    img.placeholder {
+        position: absolute;
+        max-width: 100%;
+        z-index: -1;
+    }
+}
+
+.toolbar {
+    display: flex;
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 0.5rem;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    button {
+        font-size: larger;
+        padding: 0.5rem;
+        font-weight: bold;
+    }
+}
+
+#output {
+    display: none;
+}
+
+.generated #output {
+    display: block;
+}
+
+@media print {
+
+    #input,
+    .toolbar {
+        display: none;
+    }
+}
+
+@page {
+    margin: 0;
+}

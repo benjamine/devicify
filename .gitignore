@@ -1,0 +1,19 @@
+node_modules
+dist
+.env
+
+# vite
+vite.config.ts.*.mjs
+
+# Cloudflare
+.wrangler
+.dev.vars
+# Ignore Mac DS_Store files
+.DS_Store
+**/.DS_Store
+
+*.precompiled.ts
+*.precompiled.js
+
+# local notes
+*.local.md
