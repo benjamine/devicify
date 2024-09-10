@@ -23,7 +23,9 @@ const pond = FilePond.create(
     document.querySelector('input')
 );
 
-pond.labelIdle = 'Drag & Drop 📱 screenshots<br /> or <span class="filepond--label-action">Browse</span>';
+pond.labelIdle = `Drag & Drop 📱 screenshots<br />
+     or <span class="filepond--label-action">Browse</span><br />
+     <span class="show-demo">or <a onclick="event.preventDefault(); demo()">Show a demo</a><span>`;
 
 document.addEventListener('FilePond:updatefiles', () => {
     generate();
@@ -82,3 +84,9 @@ on('click', window, 'button.download', e => {
             console.error('oops, something went wrong!', error);
         });
 });
+
+function demo() {    
+    pond.addFiles(
+        ...[1, 2, 3, 4].map(i => `https://benjamine.github.io/devicify/screenshots/sample/sample${i}.jpeg`)
+    );
+}

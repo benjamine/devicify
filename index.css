@@ -14,6 +14,16 @@ body {
     width: calc(50% - 0.5em);
 }
 
+.filepond--root {
+    .show-demo a {
+        text-decoration: underline;
+    }
+}
+
+.generated .filepond--root .show-demo {
+    display: none;
+}
+
 .mockup {
     position: relative;
 
